@@ -883,3 +883,48 @@ tbody tr:last-child td { border-bottom: none; }
     .modal { position: absolute; display: block !important; background: transparent; padding: 0; }
     .modal-content { box-shadow: none; width: 100%; max-width: 100%; }
 }
+
+/* ==========================================
+   FOOTER STYLING
+   ========================================== */
+.main-footer {
+    margin-top: 40px;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    color: var(--secondary);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+}
+
+.footer-left strong {
+    color: var(--primary);
+}
+
+.footer-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    background-color: var(--success);
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 8px var(--success);
+}
+
+/* Ensure footer works on mobile */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+}
