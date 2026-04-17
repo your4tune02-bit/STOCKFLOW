@@ -309,7 +309,13 @@ function applyRoleRestrictions() {
     }
 }
 
-function logout() {
+async function logout() {
+    const ok = await showConfirm(
+        'Log Out?',
+        'You will be returned to the landing page. Any unsaved cart items will be lost.',
+        'Log Out', 'btn-danger'
+    );
+    if (!ok) return;
     localStorage.removeItem('sf_logged_in');
     localStorage.removeItem('sf_current_user');
     location.reload();
@@ -1360,9 +1366,17 @@ function saveNewUser(event) {
     showToast(`User "${username}" created as ${role}.`, 'success');
 }
 
-function toggleUserStatus(username) {
+async function toggleUserStatus(username) {
     const user = users.find(u => u.username.toLowerCase() === username.toLowerCase());
     if (!user) return;
+    const newStatus = user.active === false ? 'activate' : 'deactivate';
+    const ok = await showConfirm(
+        `${newStatus.charAt(0).toUpperCase() + newStatus.slice(1)} User?`,
+        `Are you sure you want to ${newStatus} "${username}"?${newStatus === 'deactivate' ? ' They will not be able to log in.' : ''}`,
+        newStatus.charAt(0).toUpperCase() + newStatus.slice(1),
+        newStatus === 'deactivate' ? 'btn-danger' : 'btn-success'
+    );
+    if (!ok) return;
     user.active = user.active === false ? true : false;
     saveData();
     renderUsers();
