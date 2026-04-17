@@ -1,6 +1,11 @@
 /* ==========================================
    DARK MODE
    ========================================== */
+/* Smooth dark mode color transitions */
+body {
+    transition: background-color 0.4s cubic-bezier(0.22, 1, 0.36, 1), color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 body.dark-mode {
     --light: #0f172a;
     --white: #1e293b;
@@ -9,6 +14,18 @@ body.dark-mode {
     --secondary: #94a3b8;
     background-color: #0f172a;
     color: #f1f5f9;
+}
+
+body.dark-mode .card,
+body.dark-mode .section-box,
+body.dark-mode .pos-sidebar,
+body.dark-mode .product-card,
+body.dark-mode .search-bar,
+body.dark-mode #cash-tendered,
+body.dark-mode .cart-header,
+body.dark-mode .cart-footer,
+body.dark-mode #sidebar {
+    transition: background-color 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s cubic-bezier(0.22, 1, 0.36, 1), color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 body.dark-mode .card,
