@@ -92,7 +92,7 @@
     background: var(--light);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    transition: all 0.2s;
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .branch-card:hover {
@@ -142,7 +142,7 @@
     inset: 0;
     background: #cbd5e1;
     border-radius: 26px;
-    transition: all 0.3s;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .toggle-slider::before {
@@ -154,7 +154,7 @@
     bottom: 3px;
     background: white;
     border-radius: 50%;
-    transition: transform 0.3s;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
@@ -181,7 +181,7 @@
     background: var(--light);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    transition: all 0.2s;
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .integration-item:hover {
