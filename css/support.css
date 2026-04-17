@@ -27,7 +27,7 @@
     border: 1px solid rgba(255, 255, 255, 0.07);
     border-radius: 14px;
     padding: 22px 24px;
-    transition: all 0.3s ease;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .lp-contact-card:hover {
@@ -102,7 +102,7 @@
     color: white;
     font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
     font-size: 0.92rem;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
     outline: none;
 }
 
@@ -158,7 +158,7 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     overflow: hidden;
-    transition: all 0.2s ease;
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .faq-item:hover {
@@ -176,7 +176,7 @@
     font-size: 0.92rem;
     cursor: pointer;
     color: var(--primary);
-    transition: all 0.2s ease;
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
     list-style: none;
     display: flex;
     align-items: center;
@@ -194,7 +194,7 @@
     font-size: 1.3rem;
     font-weight: 300;
     color: var(--secondary);
-    transition: transform 0.2s ease;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
     flex-shrink: 0;
 }
 
@@ -235,7 +235,7 @@
     border-radius: var(--radius-md);
     padding: 22px 24px;
     box-shadow: var(--shadow-sm);
-    transition: all 0.2s ease;
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .support-contact-item:hover {
