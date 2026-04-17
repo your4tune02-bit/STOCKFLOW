@@ -82,7 +82,7 @@ td {
 }
 
 tbody tr {
-    transition: background 0.15s ease;
+    transition: background 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 tbody tr:hover {
