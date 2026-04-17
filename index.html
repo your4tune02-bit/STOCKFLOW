@@ -64,7 +64,7 @@
         <div class="stars-bg"></div>
 
         <nav class="lp-navbar" id="lp-navbar">
-            <div class="lp-nav-brand">
+            <div class="lp-nav-brand" onclick="document.getElementById('landing-page').scrollTo({top:0,behavior:'smooth'})" style="cursor:pointer;">
                 <span class="lp-logo-icon">◈</span>
                 <span class="lp-logo-text">StockFlow</span>
             </div>
@@ -563,7 +563,7 @@
         <!-- FOOTER -->
         <footer class="lp-footer">
             <div class="lp-container lp-footer-inner">
-                <div class="lp-footer-brand">
+                <div class="lp-footer-brand" onclick="document.getElementById('landing-page').scrollTo({top:0,behavior:'smooth'})" style="cursor:pointer;">
                     <span class="lp-logo-icon">◈</span> StockFlow
                     <p>Smart inventory for every store.</p>
                 </div>
@@ -641,7 +641,7 @@
 
     <!-- Sidebar Navigation -->
     <nav class="no-print" id="sidebar">
-        <div class="sidebar-brand">
+        <div class="sidebar-brand" onclick="showPage('dashboard', document.querySelector('.nav-item'))" style="cursor:pointer;">
             <h1>StockFlow</h1>
         </div>
         <div class="sidebar-user">
