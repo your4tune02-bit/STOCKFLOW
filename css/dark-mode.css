@@ -1,0 +1,350 @@
+/* ==========================================
+   DARK MODE
+   ========================================== */
+body.dark-mode {
+    --light: #0f172a;
+    --white: #1e293b;
+    --border: #334155;
+    --primary: #f1f5f9;
+    --secondary: #94a3b8;
+    background-color: #0f172a;
+    color: #f1f5f9;
+}
+
+body.dark-mode .card,
+body.dark-mode .section-box,
+body.dark-mode .pos-sidebar,
+body.dark-mode .login-container,
+body.dark-mode .confirm-box,
+body.dark-mode .modal-content {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+body.dark-mode .search-bar,
+body.dark-mode #cash-tendered {
+    background: #0f172a;
+    border-color: #334155;
+    color: #f1f5f9;
+}
+
+body.dark-mode thead tr th {
+    background: #0f172a;
+    color: #94a3b8;
+    border-color: #334155;
+}
+
+body.dark-mode tbody tr:hover {
+    background: #0f172a;
+}
+
+body.dark-mode td {
+    border-color: #334155;
+    color: #e2e8f0;
+}
+
+body.dark-mode .cart-header {
+    background: #0f172a;
+    border-color: #334155;
+}
+
+body.dark-mode .cart-footer {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+body.dark-mode .profile-card {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+body.dark-mode .profile-placeholder {
+    background: linear-gradient(135deg, #1e3a5f 0%, #1e2d4f 100%);
+}
+
+body.dark-mode .skill-tag {
+    background: #1e3a5f;
+    border-color: #2563eb;
+}
+
+body.dark-mode .portfolio-modal-content {
+    background: #1e293b;
+}
+
+body.dark-mode .portfolio-modal-body {
+    background: #1e293b;
+}
+
+body.dark-mode .portfolio-section h4 {
+    border-color: #334155;
+}
+
+body.dark-mode .contributions-list li {
+    border-color: #334155;
+    color: #e2e8f0;
+}
+
+body.dark-mode .mobile-header {
+    background: #1e293b;
+    border-color: #334155;
+    color: #f1f5f9;
+}
+
+body.dark-mode .profile-card h3 {
+    color: #e2e8f0;
+}
+
+body.dark-mode .toast {
+    background: #1e293b;
+    color: #f1f5f9;
+}
+
+body.dark-mode .qty-btn {
+    background: #0f172a;
+    border-color: #334155;
+    color: #e2e8f0;
+}
+
+body.dark-mode .product-card {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+body.dark-mode .product-image {
+    background: #0f172a;
+}
+
+body.dark-mode .cat-btn {
+    background: #1e293b;
+    border-color: #334155;
+    color: #94a3b8;
+}
+
+body.dark-mode .activity-item {
+    border-color: #334155;
+}
+
+body.dark-mode .cart-item {
+    border-color: #334155;
+}
+
+body.dark-mode .dashed-divider {
+    border-color: #334155;
+}
+
+body.dark-mode .lp-activity-row {
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+/* ==========================================
+
+   DARK MODE — EXTENDED COVERAGE
+   ========================================== */
+/* Inputs, selects, textareas */
+body.dark-mode select.search-bar {
+    background: #0f172a;
+    border-color: #334155;
+    color: #f1f5f9;
+}
+
+body.dark-mode select.search-bar option {
+    background: #1e293b;
+    color: #f1f5f9;
+}
+
+body.dark-mode .auth-input {
+    background: #0f172a !important;
+    color: #f1f5f9;
+}
+
+/* Buttons */
+body.dark-mode .btn-secondary {
+    background: #334155;
+    color: #e2e8f0;
+}
+
+body.dark-mode .btn-secondary:hover:not(:disabled) {
+    background: #475569;
+}
+
+body.dark-mode .btn-checkout:disabled {
+    background: #334155;
+    color: #64748b;
+}
+
+/* Badges */
+body.dark-mode .badge-out {
+    background: #475569;
+}
+
+body.dark-mode .role-admin {
+    background: rgba(139, 92, 246, 0.2);
+}
+
+body.dark-mode .role-manager {
+    background: rgba(59, 130, 246, 0.2);
+}
+
+body.dark-mode .role-cashier {
+    background: rgba(16, 185, 129, 0.2);
+}
+
+body.dark-mode .user-active {
+    background: rgba(16, 185, 129, 0.2);
+}
+
+body.dark-mode .user-inactive {
+    background: rgba(148, 163, 184, 0.2);
+}
+
+/* Settings page */
+body.dark-mode .form-group label {
+    color: #94a3b8;
+}
+
+body.dark-mode .receipt-mini-preview {
+    background: #0f172a;
+    border-color: #334155;
+}
+
+body.dark-mode .receipt-mini-preview strong {
+    color: #f1f5f9;
+}
+
+body.dark-mode .receipt-mini-preview small {
+    color: #94a3b8;
+}
+
+body.dark-mode .preview-divider {
+    border-color: #334155;
+}
+
+body.dark-mode .branch-card {
+    background: #0f172a;
+    border-color: #334155;
+}
+
+body.dark-mode .integration-item {
+    background: #0f172a;
+    border-color: #334155;
+}
+
+body.dark-mode .integration-info strong {
+    color: #e2e8f0;
+}
+
+/* Toggle switch dark mode */
+body.dark-mode .toggle-slider {
+    background: #475569;
+}
+
+body.dark-mode .toggle-slider::before {
+    background: #e2e8f0;
+}
+
+/* Analytics bars */
+body.dark-mode .analytics-bar-value {
+    color: #e2e8f0;
+}
+
+body.dark-mode .analytics-bar-label {
+    color: #94a3b8;
+}
+
+/* Sidebar extended */
+body.dark-mode #sidebar {
+    background: #0b1121;
+}
+
+body.dark-mode .sidebar-user {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Receipt modal */
+body.dark-mode .receipt-paper {
+    background: #1e293b;
+    color: #e2e8f0;
+}
+
+body.dark-mode .receipt-subtitle {
+    color: #94a3b8;
+}
+
+body.dark-mode .receipt-thank-you {
+    color: #94a3b8;
+}
+
+/* Empty states */
+body.dark-mode .empty-state {
+    color: #64748b;
+}
+
+body.dark-mode .empty-cart-msg {
+    color: #64748b;
+}
+
+/* Profile portfolio dark */
+body.dark-mode .portfolio-placeholder-notice {
+    background: rgba(251, 191, 36, 0.08);
+    border-color: rgba(251, 191, 36, 0.3);
+}
+
+body.dark-mode .portfolio-placeholder-notice p {
+    color: #fbbf24;
+}
+
+/* Confirm + modal misc */
+body.dark-mode .confirm-box h3 {
+    color: #f1f5f9;
+}
+
+body.dark-mode .confirm-box p {
+    color: #94a3b8;
+}
+
+body.dark-mode .modal-header h2 {
+    color: #f1f5f9;
+}
+
+body.dark-mode .btn-close {
+    color: #64748b;
+}
+
+body.dark-mode .btn-close:hover {
+    color: #f87171;
+}
+
+body.dark-mode .auth-toggle-text {
+    color: #94a3b8;
+}
+
+body.dark-mode .change-display {
+    color: #94a3b8;
+}
+
+/* Hover states */
+body.dark-mode .btn-clear-cart:hover {
+    background: rgba(239, 68, 68, 0.15);
+}
+
+body.dark-mode .remove-btn {
+    background: rgba(239, 68, 68, 0.15);
+}
+
+body.dark-mode .remove-btn:hover {
+    background: var(--danger);
+    color: white;
+}
+
+/* Add product box */
+body.dark-mode .add-product-box {
+    border-top-color: var(--accent);
+}
+
+/* Section header */
+body.dark-mode .section-header h1 {
+    color: #f1f5f9;
+}
+
+/* ==========================================

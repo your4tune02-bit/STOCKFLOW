@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockFlow | Digital Inventory Partner</title>
+    <!-- CSS: Organized into modular files -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/landing.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/pos.css">
+    <link rel="stylesheet" href="css/tables.css">
+    <link rel="stylesheet" href="css/portfolio.css">
+    <link rel="stylesheet" href="css/analytics.css">
+    <link rel="stylesheet" href="css/users.css">
+    <link rel="stylesheet" href="css/settings.css">
+    <link rel="stylesheet" href="css/support.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/polish.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
+
+    <!-- Custom Confirm Modal -->
+    <div id="confirm-modal" class="modal">
+        <div class="confirm-box">
+            <div class="confirm-icon" id="confirm-icon">⚠️</div>
+            <h3 id="confirm-title">Are you sure?</h3>
+            <p id="confirm-message">This action cannot be undone.</p>
+            <div class="flex-gap mt-4">
+                <button class="btn btn-secondary flex-1" onclick="resolveConfirm(false)">Cancel</button>
+                <button class="btn flex-1" id="confirm-ok-btn" onclick="resolveConfirm(true)">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Restock Modal -->
+    <div id="restock-modal" class="modal">
+        <div class="confirm-box">
+            <div class="confirm-icon">📦</div>
+            <h3 id="restock-product-name">Restock Item</h3>
+            <p class="text-muted">Enter the number of new units that arrived.</p>
+            <input type="number" id="restock-qty-input" class="search-bar mt-3" placeholder="Quantity (e.g. 50)"
+                min="1">
+            <p id="restock-error" class="error-text hidden mt-2 text-center">Please enter a valid quantity.</p>
+            <div class="flex-gap mt-4">
+                <button class="btn btn-secondary flex-1" onclick="closeRestockModal()">Cancel</button>
+                <button class="btn btn-success flex-1" onclick="confirmRestock()">Add Stock</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Landing Page -->
+    <div id="landing-page">
+        <canvas id="landing-canvas"></canvas>
+        <div class="stars-bg"></div>
+
+        <nav class="lp-navbar" id="lp-navbar">
+            <div class="lp-nav-brand">
+                <span class="lp-logo-icon">◈</span>
+                <span class="lp-logo-text">StockFlow</span>
+            </div>
+            <ul class="lp-nav-links" id="lp-nav-links">
+                <li><a class="lp-nav-link" onclick="lpScroll('lp-features')">Features</a></li>
+                <li><a class="lp-nav-link" onclick="lpScroll('lp-overview')">How it Works</a></li>
+                <li><a class="lp-nav-link" onclick="lpScroll('lp-ratings')">Reviews</a></li>
+                <li><a class="lp-nav-link" onclick="lpScroll('lp-pricing')">Pricing</a></li>
+                <li><a class="lp-nav-link" onclick="lpScroll('lp-contact')">Contact</a></li>
+            </ul>
+            <div class="lp-nav-cta">
+                <button class="lp-nav-login" onclick="showLoginModal()">Log In</button>
+                <button class="lp-nav-signup" onclick="showLoginModal()">Start Free Trial</button>
+            </div>
+            <button class="lp-hamburger" onclick="toggleLpNav()">☰</button>
+        </nav>
+
+        <!-- HERO SECTION -->
+        <section class="lp-hero">
+            <div class="lp-hero-left">
+                <div class="lp-badge">INVENTORY MANAGEMENT</div>
+                <h1>StockFlow</h1>
+                <p class="lp-hero-sub">Bridging the gap between manual and digital for small shop owners.<br>Manage
+                    inventory, track sales, and grow your business — all in one place.</p>
+                <div class="lp-hero-btns">
+                    <button class="lp-btn-primary" onclick="showLoginModal()">Start Free Trial →</button>
+                    <button class="lp-btn-ghost" onclick="showLoginModal()">Log In</button>
+                </div>
+                <div class="lp-hero-stats">
+                    <div class="lp-stat"><span class="lp-stat-num">500+</span><span class="lp-stat-label">Shop
+                            Owners</span></div>
+                    <div class="lp-stat-divider"></div>
+                    <div class="lp-stat"><span class="lp-stat-num">99.9%</span><span class="lp-stat-label">Uptime</span>
+                    </div>
+                    <div class="lp-stat-divider"></div>
+                    <div class="lp-stat"><span class="lp-stat-num">4.9★</span><span class="lp-stat-label">Avg
+                            Rating</span></div>
+                </div>
+            </div>
+            <div class="lp-hero-visual">
+                <div class="lp-dashboard-preview">
+                    <div class="lp-preview-bar">
+                        <span class="lp-dot red"></span>
+                        <span class="lp-dot yellow"></span>
+                        <span class="lp-dot green"></span>
+                        <span class="lp-preview-title">StockFlow Dashboard</span>
+                    </div>
+                    <div class="lp-preview-cards">
+                        <div class="lp-preview-card lp-pc-green">
+                            <div class="lp-pc-label">Daily Sales</div>
+                            <div class="lp-pc-value">₱4,280</div>
+                            <div class="lp-pc-trend">↑ 12% today</div>
+                        </div>
+                        <div class="lp-preview-card lp-pc-blue">
+                            <div class="lp-pc-label">Transactions</div>
+                            <div class="lp-pc-value">38</div>
+                            <div class="lp-pc-trend">↑ 5 new</div>
+                        </div>
+                        <div class="lp-preview-card lp-pc-amber">
+                            <div class="lp-pc-label">Low Stock</div>
+                            <div class="lp-pc-value">3</div>
+                            <div class="lp-pc-trend">⚠ needs restock</div>
+                        </div>
+                    </div>
+                    <div class="lp-preview-chart">
+                        <div class="lp-chart-bar" style="height:45%" title="Meat"></div>
+                        <div class="lp-chart-bar" style="height:70%" title="Canned"></div>
+                        <div class="lp-chart-bar" style="height:55%" title="Beverages"></div>
+                        <div class="lp-chart-bar" style="height:85%" title="Pantry"></div>
+                        <div class="lp-chart-bar" style="height:60%" title="Snacks"></div>
+                        <div class="lp-chart-bar" style="height:40%" title="Others"></div>
+                    </div>
+                    <div class="lp-preview-activity">
+                        <div class="lp-activity-row"><span>🧾 Txn #0038</span><span class="lp-amt">+₱185.00</span></div>
+                        <div class="lp-activity-row"><span>🧾 Txn #0037</span><span class="lp-amt">+₱92.50</span></div>
+                        <div class="lp-activity-row"><span>🧾 Txn #0036</span><span class="lp-amt">+₱340.00</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section class="lp-section lp-about-section" id="lp-about">
+            <div class="lp-container">
+                <div class="lp-section-label">About StockFlow</div>
+                <h2 class="lp-section-title">Built for the <em>everyday</em> shop owner</h2>
+                <p class="lp-section-desc">StockFlow was born out of a simple observation — most small store owners in
+                    local communities still rely on paper notebooks, manual counting, and gut instinct to run their
+                    businesses. We built StockFlow to change that, without requiring technical expertise or expensive
+                    hardware.</p>
+                <div class="lp-about-grid">
+                    <div class="lp-about-card">
+                        <div class="lp-about-icon">🏪</div>
+                        <h3>Made for Sari-Sari Stores</h3>
+                        <p>Designed with local Filipino shop owners in mind. Categories, peso currency, and workflows
+                            that match how you actually work.</p>
+                    </div>
+                    <div class="lp-about-card">
+                        <div class="lp-about-icon">🎓</div>
+                        <h3>Student-Built, Community Driven</h3>
+                        <p>StockFlow was developed by a passionate team of students determined to create tools that
+                            empower local entrepreneurs.</p>
+                    </div>
+                    <div class="lp-about-card">
+                        <div class="lp-about-icon">🔒</div>
+                        <h3>Private & Secure</h3>
+                        <p>Your data stays on your device. No cloud dependency, no subscription required for basic use —
+                            just open and go.</p>
+                    </div>
+                    <div class="lp-about-card">
+                        <div class="lp-about-icon">📱</div>
+                        <h3>Works Everywhere</h3>
+                        <p>Runs on any modern browser — phone, tablet, or desktop. No app installation needed. Just open
+                            the link.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURES SECTION -->
+        <section class="lp-section lp-features-section" id="lp-features">
+            <div class="lp-container">
+                <div class="lp-section-label">What's Inside</div>
+                <h2 class="lp-section-title">Everything you need, nothing you don't</h2>
+                <div class="lp-features-grid">
+                    <div class="lp-feature-card" data-feature="F-01">
+                        <div class="lp-feature-id">F-01</div>
+                        <div class="lp-feature-icon">📊</div>
+                        <h3>Live Dashboard</h3>
+                        <p>Real-time overview of daily sales, transaction count, and low-stock alerts — all animated and
+                            easy to read.</p>
+                        <ul class="lp-feature-list">
+                            <li>Daily revenue totals</li>
+                            <li>Sales-by-category chart</li>
+                            <li>Recent transactions feed</li>
+                        </ul>
+                        <span class="lp-feature-badge lp-badge-blue">Core</span>
+                    </div>
+                    <div class="lp-feature-card" data-feature="F-02">
+                        <div class="lp-feature-id">F-02</div>
+                        <div class="lp-feature-icon">🛒</div>
+                        <h3>Point of Sale</h3>
+                        <p>A full POS system with product grid, shopping cart, and cash change calculator — built for
+                            speed at the counter.</p>
+                        <ul class="lp-feature-list">
+                            <li>Category filtering</li>
+                            <li>Cart with qty control</li>
+                            <li>Auto change calculator</li>
+                        </ul>
+                        <span class="lp-feature-badge lp-badge-green">Core</span>
+                    </div>
+                    <div class="lp-feature-card" data-feature="F-03">
+                        <div class="lp-feature-id">F-03</div>
+                        <div class="lp-feature-icon">📦</div>
+                        <h3>Inventory Manager</h3>
+                        <p>Add, restock, price-edit, and delete products. Filter by status and search by name in real
+                            time.</p>
+                        <ul class="lp-feature-list">
+                            <li>Low stock alerts</li>
+                            <li>Quick restock modal</li>
+                            <li>Price editing</li>
+                        </ul>
+                        <span class="lp-feature-badge lp-badge-green">Core</span>
+                    </div>
+                    <div class="lp-feature-card" data-feature="F-04">
+                        <div class="lp-feature-id">F-04</div>
+                        <div class="lp-feature-icon">🧾</div>
+                        <h3>Digital Receipts</h3>
+                        <p>Auto-generate a printable receipt after every transaction with itemized details, totals, and
+                            change.</p>
+                        <ul class="lp-feature-list">
+                            <li>Printable layout</li>
+                            <li>Transaction numbering</li>
+                            <li>Date & time stamps</li>
+                        </ul>
+                        <span class="lp-feature-badge lp-badge-blue">Core</span>
+                    </div>
+                    <div class="lp-feature-card" data-feature="F-05">
+                        <div class="lp-feature-id">F-05</div>
+                        <div class="lp-feature-icon">👤</div>
+                        <h3>User Accounts</h3>
+                        <p>Separate login for each store manager. Create accounts with secure username & password
+                            authentication.</p>
+                        <ul class="lp-feature-list">
+                            <li>Multi-user support</li>
+                            <li>Session persistence</li>
+                            <li>Demo account included</li>
+                        </ul>
+                        <span class="lp-feature-badge lp-badge-purple">Pro</span>
+                    </div>
+                    <div class="lp-feature-card" data-feature="F-06">
+                        <div class="lp-feature-id">F-06</div>
+                        <div class="lp-feature-icon">📈</div>
+                        <h3>Sales Analytics</h3>
+                        <p>Visual doughnut chart breaking down revenue by product category, so you know what's selling
+                            best.</p>
+                        <ul class="lp-feature-list">
+                            <li>Category breakdown</li>
+                            <li>Visual chart rendering</li>
+                            <li>One-tap daily reset</li>
+                        </ul>
+                        <span class="lp-feature-badge lp-badge-purple">Pro</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OVERVIEW SECTION -->
+        <section class="lp-section lp-overview-section" id="lp-overview">
+            <div class="lp-container">
+                <div class="lp-section-label">How it Works</div>
+                <h2 class="lp-section-title">Up and running in <em>minutes</em></h2>
+                <div class="lp-steps">
+                    <div class="lp-step">
+                        <div class="lp-step-num">01</div>
+                        <div class="lp-step-body">
+                            <h3>Create Your Account</h3>
+                            <p>Sign up in seconds — no email needed. Choose a username and password and your store
+                                profile is ready.</p>
+                        </div>
+                    </div>
+                    <div class="lp-step-arrow">→</div>
+                    <div class="lp-step">
+                        <div class="lp-step-num">02</div>
+                        <div class="lp-step-body">
+                            <h3>Load Your Inventory</h3>
+                            <p>Add your products with names, categories, prices, and stock quantities. Default items
+                                included to get you started fast.</p>
+                        </div>
+                    </div>
+                    <div class="lp-step-arrow">→</div>
+                    <div class="lp-step">
+                        <div class="lp-step-num">03</div>
+                        <div class="lp-step-body">
+                            <h3>Start Selling</h3>
+                            <p>Use the POS to add items to cart, accept cash, and print receipts. Every sale updates
+                                your dashboard instantly.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="lp-overview-highlights">
+                    <div class="lp-ov-item">
+                        <span class="lp-ov-icon">⚡</span>
+                        <div><strong>Instant Setup</strong><br><small>No configuration files or servers needed</small>
+                        </div>
+                    </div>
+                    <div class="lp-ov-item">
+                        <span class="lp-ov-icon">💾</span>
+                        <div><strong>Auto-Save</strong><br><small>All data saved automatically to your device</small>
+                        </div>
+                    </div>
+                    <div class="lp-ov-item">
+                        <span class="lp-ov-icon">🔄</span>
+                        <div><strong>Always Synced</strong><br><small>Open on any device, data is always current</small>
+                        </div>
+                    </div>
+                    <div class="lp-ov-item">
+                        <span class="lp-ov-icon">🖨</span>
+                        <div><strong>Print Ready</strong><br><small>Professional receipts on any printer</small></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RATINGS / REVIEWS SECTION -->
+        <section class="lp-section lp-ratings-section" id="lp-ratings">
+            <div class="lp-container">
+                <div class="lp-section-label">User Reviews</div>
+                <h2 class="lp-section-title">Loved by shop owners</h2>
+                <div class="lp-rating-summary">
+                    <div class="lp-big-rating">4.9</div>
+                    <div class="lp-rating-stars">★★★★★</div>
+                    <div class="lp-rating-count">Based on 200+ reviews</div>
+                </div>
+                <div class="lp-reviews-grid">
+                    <div class="lp-review-card">
+                        <div class="lp-review-stars">★★★★★</div>
+                        <p class="lp-review-text">"Finally I don't have to use a notebook anymore. StockFlow tells me
+                            exactly what needs restocking before I even notice."</p>
+                        <div class="lp-reviewer">
+                            <div class="lp-reviewer-avatar">M</div>
+                            <div>
+                                <div class="lp-reviewer-name">Maria Santos</div>
+                                <div class="lp-reviewer-role">Sari-Sari Store Owner, Cebu</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lp-review-card lp-review-featured">
+                        <div class="lp-review-badge">⭐ Top Review</div>
+                        <div class="lp-review-stars">★★★★★</div>
+                        <p class="lp-review-text">"The POS feature is amazing. My cashier learned it in 10 minutes.
+                            Change computation alone saves us from so many mistakes."</p>
+                        <div class="lp-reviewer">
+                            <div class="lp-reviewer-avatar">R</div>
+                            <div>
+                                <div class="lp-reviewer-name">Ramon dela Cruz</div>
+                                <div class="lp-reviewer-role">General Store Owner, Davao</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lp-review-card">
+                        <div class="lp-review-stars">★★★★★</div>
+                        <p class="lp-review-text">"The sales chart at the end of the day shows me exactly which products
+                            are making money. It changed how I order stock."</p>
+                        <div class="lp-reviewer">
+                            <div class="lp-reviewer-avatar">J</div>
+                            <div>
+                                <div class="lp-reviewer-name">Jessica Tan</div>
+                                <div class="lp-reviewer-role">Mini Grocery Owner, Manila</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lp-review-card">
+                        <div class="lp-review-stars">★★★★☆</div>
+                        <p class="lp-review-text">"Very easy to use and no internet needed. I use it on my old tablet
+                            and it works perfectly. Would recommend to any tindera."</p>
+                        <div class="lp-reviewer">
+                            <div class="lp-reviewer-avatar">L</div>
+                            <div>
+                                <div class="lp-reviewer-name">Ligaya Reyes</div>
+                                <div class="lp-reviewer-role">Variety Store, Iloilo</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICING SECTION -->
+        <section class="lp-section lp-pricing-section" id="lp-pricing">
+            <div class="lp-container">
+                <div class="lp-section-label">Pricing Plans</div>
+                <h2 class="lp-section-title">Simple, transparent pricing</h2>
+                <p class="lp-section-desc">Start free. Upgrade when you're ready. No hidden fees, cancel anytime.</p>
+
+                <div class="lp-pricing-toggle">
+                    <span class="lp-toggle-label" id="lp-label-monthly">Monthly</span>
+                    <div class="lp-toggle-track" id="lp-billing-toggle" onclick="toggleBilling()">
+                        <div class="lp-toggle-thumb" id="lp-toggle-thumb"></div>
+                    </div>
+                    <span class="lp-toggle-label" id="lp-label-yearly">Yearly <span class="lp-save-badge">Save
+                            20%</span></span>
+                </div>
+
+                <div class="lp-pricing-grid">
+                    <!-- FREE -->
+                    <div class="lp-price-card">
+                        <div class="lp-plan-id">P-01</div>
+                        <div class="lp-plan-name">Free</div>
+                        <div class="lp-plan-price">
+                            <span class="lp-price-amount">₱0</span>
+                            <span class="lp-price-period">forever</span>
+                        </div>
+                        <div class="lp-plan-trial">No credit card needed</div>
+                        <ul class="lp-plan-features">
+                            <li class="lp-pf-yes">✓ Dashboard overview</li>
+                            <li class="lp-pf-yes">✓ Up to 20 products</li>
+                            <li class="lp-pf-yes">✓ POS & receipts</li>
+                            <li class="lp-pf-yes">✓ 1 user account</li>
+                            <li class="lp-pf-no">✗ Sales analytics</li>
+                            <li class="lp-pf-no">✗ Export reports</li>
+                            <li class="lp-pf-no">✗ Multi-user access</li>
+                        </ul>
+                        <button class="lp-plan-btn lp-btn-outline" onclick="showLoginModal()">Get Started Free</button>
+                    </div>
+                    <!-- PRO -->
+                    <div class="lp-price-card lp-price-featured">
+                        <div class="lp-plan-id">P-02</div>
+                        <div class="lp-plan-popular">Most Popular</div>
+                        <div class="lp-plan-name">Pro</div>
+                        <div class="lp-plan-price">
+                            <span class="lp-price-amount" id="pro-price">₱199</span>
+                            <span class="lp-price-period" id="pro-period">/month</span>
+                        </div>
+                        <div class="lp-plan-trial" id="pro-trial">🎁 30-day free trial included</div>
+                        <ul class="lp-plan-features">
+                            <li class="lp-pf-yes">✓ Everything in Free</li>
+                            <li class="lp-pf-yes">✓ Unlimited products</li>
+                            <li class="lp-pf-yes">✓ Full sales analytics</li>
+                            <li class="lp-pf-yes">✓ Export CSV reports</li>
+                            <li class="lp-pf-yes">✓ Up to 3 user accounts</li>
+                            <li class="lp-pf-yes">✓ Priority support</li>
+                            <li class="lp-pf-no">✗ Custom branding</li>
+                        </ul>
+                        <button class="lp-plan-btn lp-btn-primary" onclick="showLoginModal()">Start Free Trial
+                            →</button>
+                    </div>
+                    <!-- BUSINESS -->
+                    <div class="lp-price-card">
+                        <div class="lp-plan-id">P-03</div>
+                        <div class="lp-plan-name">Business</div>
+                        <div class="lp-plan-price">
+                            <span class="lp-price-amount" id="biz-price">₱499</span>
+                            <span class="lp-price-period" id="biz-period">/month</span>
+                        </div>
+                        <div class="lp-plan-trial" id="biz-trial">🎁 30-day free trial included</div>
+                        <ul class="lp-plan-features">
+                            <li class="lp-pf-yes">✓ Everything in Pro</li>
+                            <li class="lp-pf-yes">✓ Custom store branding</li>
+                            <li class="lp-pf-yes">✓ Unlimited users</li>
+                            <li class="lp-pf-yes">✓ Advanced reporting</li>
+                            <li class="lp-pf-yes">✓ Multi-branch support</li>
+                            <li class="lp-pf-yes">✓ 24/7 dedicated support</li>
+                            <li class="lp-pf-yes">✓ Custom integrations</li>
+                        </ul>
+                        <button class="lp-plan-btn lp-btn-outline" onclick="showLoginModal()">Start Free Trial
+                            →</button>
+                    </div>
+                </div>
+                <p class="lp-pricing-note">💡 All paid plans come with a <strong>30-day free trial</strong>. No charges
+                    until your trial ends. Cancel anytime with no questions asked.</p>
+            </div>
+        </section>
+
+        <!-- FOOTER CTA -->
+        <section class="lp-section lp-cta-section">
+            <div class="lp-container lp-cta-inner">
+                <h2>Ready to take control of your store?</h2>
+                <p>Join hundreds of shop owners already using StockFlow to work smarter.</p>
+                <button class="lp-btn-primary lp-cta-btn" onclick="showLoginModal()">Get Started for Free →</button>
+            </div>
+        </section>
+
+        <!-- CONTACT US -->
+        <section class="lp-section lp-contact-section" id="lp-contact">
+            <div class="lp-container">
+                <div class="lp-section-label">Get in Touch</div>
+                <h2 class="lp-section-title">Contact <em>Us</em></h2>
+                <p class="lp-section-desc">Have questions, feedback, or need help? We'd love to hear from you.</p>
+
+                <div class="lp-contact-grid">
+                    <div class="lp-contact-info">
+                        <div class="lp-contact-card">
+                            <div class="lp-contact-card-icon">📧</div>
+                            <div>
+                                <strong>Email Us</strong>
+                                <p>support@stockflow.app</p>
+                            </div>
+                        </div>
+                        <div class="lp-contact-card">
+                            <div class="lp-contact-card-icon">📞</div>
+                            <div>
+                                <strong>Call Us</strong>
+                                <p>+63 912 345 6789</p>
+                            </div>
+                        </div>
+                        <div class="lp-contact-card">
+                            <div class="lp-contact-card-icon">📍</div>
+                            <div>
+                                <strong>Visit Us</strong>
+                                <p>Innovation Hub, Manila, PH</p>
+                            </div>
+                        </div>
+                        <div class="lp-contact-card">
+                            <div class="lp-contact-card-icon">🕐</div>
+                            <div>
+                                <strong>Business Hours</strong>
+                                <p>Mon – Fri, 8 AM – 6 PM</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form class="lp-contact-form" onsubmit="handleContactForm(event)">
+                        <div class="lp-form-row">
+                            <div class="lp-form-group">
+                                <label>Your Name</label>
+                                <input type="text" placeholder="Juan Dela Cruz" required>
+                            </div>
+                            <div class="lp-form-group">
+                                <label>Email Address</label>
+                                <input type="email" placeholder="juan@email.com" required>
+                            </div>
+                        </div>
+                        <div class="lp-form-group">
+                            <label>Subject</label>
+                            <select required>
+                                <option value="">Select a topic...</option>
+                                <option>General Inquiry</option>
+                                <option>Technical Support</option>
+                                <option>Feature Request</option>
+                                <option>Bug Report</option>
+                                <option>Pricing & Plans</option>
+                                <option>Partnership</option>
+                            </select>
+                        </div>
+                        <div class="lp-form-group">
+                            <label>Message</label>
+                            <textarea rows="5" placeholder="Tell us how we can help..." required></textarea>
+                        </div>
+                        <button type="submit" class="lp-btn-primary" style="width:100%;">Send Message →</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="lp-footer">
+            <div class="lp-container lp-footer-inner">
+                <div class="lp-footer-brand">
+                    <span class="lp-logo-icon">◈</span> StockFlow
+                    <p>Smart inventory for every store.</p>
+                </div>
+                <div class="lp-footer-links">
+                    <div class="lp-footer-col">
+                        <div class="lp-footer-col-title">Product</div>
+                        <a onclick="lpScroll('lp-features')">Features</a>
+                        <a onclick="lpScroll('lp-pricing')">Pricing</a>
+                        <a onclick="lpScroll('lp-overview')">How it Works</a>
+                    </div>
+                    <div class="lp-footer-col">
+                        <div class="lp-footer-col-title">Company</div>
+                        <a onclick="lpScroll('lp-about')">About Us</a>
+                        <a onclick="lpScroll('lp-ratings')">Reviews</a>
+                    </div>
+                    <div class="lp-footer-col">
+                        <div class="lp-footer-col-title">Account</div>
+                        <a onclick="showLoginModal()">Log In</a>
+                        <a onclick="showLoginModal()">Sign Up</a>
+                        <a onclick="showLoginModal()">Free Trial</a>
+                    </div>
+                </div>
+            </div>
+            <div class="lp-footer-bottom">
+                © 2025 StockFlow. Built with ❤️ by students, for small business owners.
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Login / Sign Up Modal -->
+    <div id="login-modal" class="modal" onclick="handleModalBackdropClick(event, 'login-modal')">
+        <div class="login-container">
+            <div class="modal-header">
+                <h2 id="auth-title" class="text-primary m-0">Welcome Back</h2>
+                <button onclick="closeLoginModal()" class="btn-close">&times;</button>
+            </div>
+
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <input type="text" id="login-user" class="search-bar auth-input mb-3" placeholder="Username" required
+                    autocomplete="username">
+                <input type="password" id="login-pass" class="search-bar auth-input mb-3" placeholder="Password"
+                    required autocomplete="current-password">
+                <button type="submit" class="btn-checkout btn-primary w-100">Access Dashboard</button>
+                <p id="login-error" class="error-text text-center mt-2 hidden">Invalid username or password!</p>
+                <p class="auth-toggle-text text-center mt-3">
+                    Don't have an account? <a href="javascript:void(0)" onclick="toggleAuthMode('signup')"
+                        class="text-accent bold">Sign Up</a>
+                </p>
+            </form>
+
+            <form id="signup-form" onsubmit="handleSignup(event)" class="hidden">
+                <input type="text" id="signup-user" class="search-bar auth-input mb-3" placeholder="Choose a Username"
+                    required autocomplete="username">
+                <input type="password" id="signup-pass" class="search-bar auth-input mb-3"
+                    placeholder="Create a Password" required autocomplete="new-password">
+                <button type="submit" class="btn-checkout btn-success w-100">Create Account</button>
+                <p id="signup-error" class="error-text text-center mt-2 hidden">Username already exists!</p>
+                <p class="auth-toggle-text text-center mt-3">
+                    Already have an account? <a href="javascript:void(0)" onclick="toggleAuthMode('login')"
+                        class="text-accent bold">Log In</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mobile Header -->
+    <div class="mobile-header no-print">
+        <h2>StockFlow</h2>
+        <button class="hamburger" onclick="toggleSidebar()">☰</button>
+    </div>
+
+    <!-- Sidebar Overlay (mobile) -->
+    <div id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Sidebar Navigation -->
+    <nav class="no-print" id="sidebar">
+        <div class="sidebar-brand">
+            <h1>StockFlow</h1>
+        </div>
+        <div class="sidebar-user">
+            <div class="sidebar-avatar" id="sidebar-avatar">?</div>
+            <div>
+                <p class="sidebar-username" id="sidebar-username">Guest</p>
+                <small class="text-muted" id="sidebar-role">Store Manager</small>
+            </div>
+        </div>
+        <ul>
+            <li class="nav-item active" onclick="showPage('dashboard', this)">
+                <span class="nav-icon">📊</span> Dashboard
+            </li>
+            <li class="nav-item" onclick="showPage('pos', this)">
+                <span class="nav-icon">🛒</span> Point of Sale
+            </li>
+            <li class="nav-item" onclick="showPage('inventory', this)">
+                <span class="nav-icon">📦</span> Inventory
+            </li>
+            <li class="nav-item" onclick="showPage('analytics', this)">
+                <span class="nav-icon">📈</span> Analytics
+            </li>
+            <li class="nav-item" id="nav-users" onclick="showPage('users', this)">
+                <span class="nav-icon">👤</span> Users
+            </li>
+            <li class="nav-item" onclick="showPage('settings', this)">
+                <span class="nav-icon">⚙️</span> Settings
+            </li>
+            <li class="nav-item" onclick="showPage('support', this)">
+                <span class="nav-icon">💬</span> Support
+            </li>
+            <li class="nav-item" onclick="showPage('portfolio', this)">
+                <span class="nav-icon">👥</span> Development Team
+            </li>
+            <li class="nav-item nav-delete-account" onclick="showDeleteAccountModal()">
+                <span class="nav-icon">🗑️</span> Delete Account
+            </li>
+            <li class="nav-item nav-dark-toggle" onclick="toggleDarkMode()" id="dark-mode-btn">
+                <span class="nav-icon">🌙</span> <span id="dark-mode-label">Dark Mode</span>
+            </li>
+            <li class="nav-item nav-logout" onclick="logout()">
+                <span class="nav-icon">🚪</span> Logout
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="no-print">
+
+        <!-- Dashboard -->
+        <section id="dashboard" class="page-section active">
+            <header class="section-header">
+                <div>
+                    <h1>Business Health Overview</h1>
+                    <p class="text-muted">Track your growth and identify shortages at a glance.</p>
+                </div>
+                <div class="flex-gap">
+                    <button class="btn btn-secondary btn-sm" onclick="exportCSV()">📥 Export CSV</button>
+                    <button class="btn btn-secondary btn-sm" onclick="confirmResetDailySales()">🔄 Reset Daily
+                        Sales</button>
+                </div>
+            </header>
+
+            <div class="dashboard-grid">
+                <div class="card card-success">
+                    <h3>Total Sales (Daily)</h3>
+                    <div class="value" id="dash-total-sales">₱0.00</div>
+                    <div class="card-sub text-muted">Today's revenue</div>
+                </div>
+                <div class="card card-warning">
+                    <h3>Low Stock Items</h3>
+                    <div class="value" id="dash-low-stock">0</div>
+                    <div class="card-sub text-muted">Need restocking</div>
+                </div>
+                <div class="card card-primary">
+                    <h3>Transactions</h3>
+                    <div id="dash-trans-count" class="value">0</div>
+                    <div class="card-sub text-muted">Completed today</div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="section-box">
+                    <h3>Sales by Category</h3>
+                    <div id="chart-empty-state" class="empty-state text-center">
+                        <div style="font-size:3rem;margin-bottom:10px;">📈</div>
+                        <p>No sales data yet.<br>Complete a transaction to see your chart.</p>
+                    </div>
+                    <div class="chart-container" id="chart-container" style="display:none;">
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="section-box">
+                    <h3>Recent Transactions</h3>
+                    <div id="no-activity" class="empty-state text-center">
+                        <div style="font-size:3rem;margin-bottom:10px;">🧾</div>
+                        <p>No sales logged yet.</p>
+                    </div>
+                    <ul id="activity-list" class="activity-list"></ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Point of Sale -->
+        <section id="pos" class="page-section">
+            <header class="section-header">
+                <div>
+                    <h1>Point of Sale</h1>
+                    <p class="text-muted">Select products and process transactions quickly.</p>
+                </div>
+            </header>
+
+            <div class="pos-layout">
+                <div class="pos-main">
+                    <input type="text" class="search-bar" id="search-input"
+                        placeholder="🔍 Search products or scan barcode..." onkeyup="filterProducts()">
+                    <div class="category-filters" id="category-filters"></div>
+                    <div class="product-grid" id="product-grid"></div>
+                </div>
+
+                <div class="pos-sidebar">
+                    <div class="cart-header">
+                        <h3>🛒 Current Order</h3>
+                        <button class="btn-clear-cart" id="btn-clear-cart" onclick="confirmClearCart()"
+                            title="Clear cart">✕ Clear</button>
+                    </div>
+                    <div class="cart-items" id="cart-items">
+                        <p class="empty-cart-msg">Cart is empty.<br><small>Click a product to add.</small></p>
+                    </div>
+                    <div class="cart-footer">
+                        <div class="cart-total flex-between">
+                            <span>Total:</span>
+                            <span id="cart-total-display">₱0.00</span>
+                        </div>
+
+                        <div class="payment-section">
+                            <input type="number" id="cash-tendered" placeholder="Amount Received (₱)"
+                                onkeyup="calculateChange()" min="0">
+                            <div class="change-display text-right mt-2" id="change-display">Change: ₱0.00</div>
+                        </div>
+
+                        <button class="btn-checkout w-100" id="btn-checkout" onclick="checkout()" disabled>✓ Confirm
+                            Payment</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Inventory -->
+        <section id="inventory" class="page-section">
+            <header class="section-header">
+                <div>
+                    <h1>Inventory Management</h1>
+                    <p class="text-muted">Add, restock, and manage your products.</p>
+                </div>
+            </header>
+
+            <div class="section-box add-product-box mb-4">
+                <h3>➕ Add New Product</h3>
+                <form id="add-product-form" onsubmit="addProduct(event)" class="add-product-grid mt-3">
+                    <input type="text" id="new-p-name" class="search-bar"
+                        placeholder="Product Name (e.g., Magic Flakes)" required>
+                    <select id="new-p-cat" class="search-bar" required>
+                        <option value="" disabled selected>Select Category</option>
+                        <option value="Meat">🥩 Meat</option>
+                        <option value="Canned Goods">🥫 Canned Goods</option>
+                        <option value="Beverages">🥤 Beverages</option>
+                        <option value="Pantry">🍚 Pantry</option>
+                        <option value="Snacks">🍿 Snacks</option>
+                        <option value="Others">📦 Others</option>
+                    </select>
+                    <input type="number" id="new-p-price" class="search-bar" placeholder="Price (₱)" min="0" step="0.25"
+                        required>
+                    <input type="number" id="new-p-stock" class="search-bar" placeholder="Initial Stock Qty" min="0"
+                        required>
+                    <input type="text" id="new-p-img" class="search-bar" placeholder="Emoji Icon (e.g., 🍞)" required>
+                    <button type="submit" class="btn-checkout btn-primary grid-span-all">Save to Inventory</button>
+                </form>
+            </div>
+
+            <div class="section-box">
+                <div class="inventory-toolbar">
+                    <h3>Current Stock Status</h3>
+                    <div class="inventory-controls">
+                        <input type="text" id="inventory-search" class="search-bar search-bar-sm"
+                            placeholder="🔍 Search inventory..." oninput="renderInventory()">
+                        <select id="inventory-filter" class="search-bar search-bar-sm" onchange="renderInventory()">
+                            <option value="all">All Items</option>
+                            <option value="low">⚠️ Low Stock</option>
+                            <option value="out">🚫 Out of Stock</option>
+                            <option value="in">✅ In Stock</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock Level</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventory-table"></tbody>
+                    </table>
+                    <div id="inventory-empty" class="empty-state text-center hidden" style="padding:30px;">
+                        <div style="font-size:2.5rem">🔍</div>
+                        <p>No products match your search.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Portfolio -->
+        <section id="portfolio" class="page-section">
+            <header class="section-header">
+                <div>
+                    <h1>Our Development Team</h1>
+                    <p class="text-muted">Click any member to view their portfolio.</p>
+                </div>
+            </header>
+
+            <div class="section-box">
+                <p class="mb-4">StockFlow was developed by a dedicated group of students focused on bridging the gap
+                    between manual tracking and digital inventory for local small shop owners. We are passionate about
+                    creating accessible community tools.</p>
+
+                <div class="profile-grid">
+                    <div class="profile-card" onclick="openMemberPortfolio(0)">
+                        <div class="profile-pic-wrap">
+                            <div class="profile-pic profile-placeholder" data-initials="CC">
+                                <span class="profile-initials">CC</span>
+                            </div>
+                            <div class="profile-pic-overlay">View Portfolio →</div>
+                        </div>
+                        <h3>Christian Reynald Canto</h3>
+                        <p class="profile-role">Project Manager</p>
+                        <small>Lead Developer</small>
+                    </div>
+                    <div class="profile-card" onclick="openMemberPortfolio(1)">
+                        <div class="profile-pic-wrap">
+                            <div class="profile-pic profile-placeholder" data-initials="SD">
+                                <span class="profile-initials">SD</span>
+                            </div>
+                            <div class="profile-pic-overlay">View Portfolio →</div>
+                        </div>
+                        <h3>Samuel Deocares Divina</h3>
+                        <p class="profile-role">QA Engineer</p>
+                        <small>Lead Documentation</small>
+                    </div>
+                    <div class="profile-card" onclick="openMemberPortfolio(2)">
+                        <div class="profile-pic-wrap">
+                            <div class="profile-pic profile-placeholder" data-initials="JG">
+                                <span class="profile-initials">JG</span>
+                            </div>
+                            <div class="profile-pic-overlay">View Portfolio →</div>
+                        </div>
+                        <h3>Jayvie Gonzales Garcia</h3>
+                        <p class="profile-role">UX Designer</p>
+                        <small>Front-End Integration</small>
+                    </div>
+                    <div class="profile-card" onclick="openMemberPortfolio(3)">
+                        <div class="profile-pic-wrap">
+                            <div class="profile-pic profile-placeholder" data-initials="JP">
+                                <span class="profile-initials">JP</span>
+                            </div>
+                            <div class="profile-pic-overlay">View Portfolio →</div>
+                        </div>
+                        <h3>Jhaila David Pagaduan</h3>
+                        <p class="profile-role">System Analyst</p>
+                        <small>Data Logic Flow</small>
+                    </div>
+                    <div class="profile-card" onclick="openMemberPortfolio(4)">
+                        <div class="profile-pic-wrap">
+                            <div class="profile-pic profile-placeholder" data-initials="MR">
+                                <span class="profile-initials">MR</span>
+                            </div>
+                            <div class="profile-pic-overlay">View Portfolio →</div>
+                        </div>
+                        <h3>Mark Rain Rodolfo</h3>
+                        <p class="profile-role">UI Designer</p>
+                        <small>Visual Aesthetics</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analytics -->
+        <section id="analytics" class="page-section">
+            <header class="section-header">
+                <div>
+                    <h1>Sales Analytics</h1>
+                    <p class="text-muted">Deep dive into your revenue, top products, and transaction history.</p>
+                </div>
+            </header>
+
+            <div class="analytics-cards-grid">
+                <div class="card card-success">
+                    <h3>Total Revenue</h3>
+                    <div class="value" id="analytics-revenue">₱0.00</div>
+                    <div class="card-sub text-muted">All-time earnings</div>
+                </div>
+                <div class="card card-primary">
+                    <h3>Total Transactions</h3>
+                    <div class="value" id="analytics-transactions">0</div>
+                    <div class="card-sub text-muted">Completed sales</div>
+                </div>
+                <div class="card card-warning">
+                    <h3>Avg Order Value</h3>
+                    <div class="value" id="analytics-avg">₱0.00</div>
+                    <div class="card-sub text-muted">Per transaction</div>
+                </div>
+                <div class="card" style="border-left-color: #8b5cf6;">
+                    <h3>Top Category</h3>
+                    <div class="value" id="analytics-top-cat" style="font-size:1.4rem;">—</div>
+                    <div class="card-sub text-muted">Highest revenue</div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="section-box">
+                    <h3>Top Selling Products</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Product</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Sold</th>
+                                </tr>
+                            </thead>
+                            <tbody id="analytics-top-products"></tbody>
+                        </table>
+                    </div>
+                    <div id="analytics-top-empty" class="empty-state text-center hidden" style="padding:20px;">
+                        <div style="font-size:2rem;">📊</div>
+                        <p>No sales data yet. Complete transactions to see top products.</p>
+                    </div>
+                </div>
+
+                <div class="section-box">
+                    <h3>Revenue by Category</h3>
+                    <div id="analytics-cat-bars" class="analytics-bar-chart"></div>
+                    <div id="analytics-cat-empty" class="empty-state text-center hidden" style="padding:20px;">
+                        <div style="font-size:2rem;">📈</div>
+                        <p>No category data yet.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-box mt-4">
+                <h3>Transaction History</h3>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Txn #</th>
+                                <th>Time</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                                <th>Receipt</th>
+                            </tr>
+                        </thead>
+                        <tbody id="analytics-txn-table"></tbody>
+                    </table>
+                </div>
+                <div id="analytics-txn-empty" class="empty-state text-center hidden" style="padding:20px;">
+                    <div style="font-size:2rem;">🧾</div>
+                    <p>No transactions recorded yet.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Users -->
+        <section id="users" class="page-section">
+            <header class="section-header">
+                <div>
+                    <h1>User Management</h1>
+                    <p class="text-muted">Manage staff accounts, roles, and access.</p>
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="showAddUserModal()">➕ Add User</button>
+            </header>
+
+            <div class="section-box">
+                <div class="inventory-toolbar">
+                    <h3>Staff Accounts</h3>
+                    <div class="inventory-controls">
+                        <input type="text" id="user-search" class="search-bar search-bar-sm"
+                            placeholder="🔍 Search users..." oninput="renderUsers()" autocomplete="off">
+                        <select id="user-role-filter" class="search-bar search-bar-sm" onchange="renderUsers()">
+                            <option value="all">All Roles</option>
+                            <option value="admin">Admin</option>
+                            <option value="manager">Manager</option>
+                            <option value="cashier">Cashier</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table"></tbody>
+                    </table>
+                </div>
+                <div id="users-empty" class="empty-state text-center hidden" style="padding:30px;">
+                    <div style="font-size:2.5rem;">👤</div>
+                    <p>No users match your search.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings -->
+        <section id="settings" class="page-section">
+            <header class="section-header">
+                <div>
+                    <h1>Settings</h1>
+                    <p class="text-muted">Customize your store profile, receipts, and preferences.</p>
+                </div>
+            </header>
+
+            <div class="settings-grid">
+                <!-- Business Profile -->
+                <div class="section-box">
+                    <h3>🏪 Business Profile</h3>
+                    <form id="settings-profile-form" class="settings-form" onsubmit="saveSettings(event)">
+                        <div class="form-group">
+                            <label>Store Name</label>
+                            <input type="text" id="set-store-name" class="search-bar" placeholder="My Sari-Sari Store">
+                        </div>
+                        <div class="form-group">
+                            <label>Owner Name</label>
+                            <input type="text" id="set-owner-name" class="search-bar" placeholder="Juan Dela Cruz">
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <input type="text" id="set-address" class="search-bar"
+                                placeholder="123 Main St, Barangay, City">
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Number</label>
+                            <input type="text" id="set-contact" class="search-bar" placeholder="+63 912 345 6789">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">💾 Save Profile</button>
+                    </form>
+                </div>
+
+                <!-- Receipt Branding -->
+                <div class="section-box">
+                    <h3>🧾 Receipt Branding</h3>
+                    <form class="settings-form" onsubmit="event.preventDefault()">
+                        <div class="form-group">
+                            <label>Receipt Header Text</label>
+                            <input type="text" id="set-receipt-header" class="search-bar" placeholder="StockFlow"
+                                oninput="updateBrandingPreview()">
+                        </div>
+                        <div class="form-group">
+                            <label>Receipt Footer Text</label>
+                            <input type="text" id="set-receipt-footer" class="search-bar"
+                                placeholder="Thank you for your purchase!" oninput="updateBrandingPreview()">
+                        </div>
+                        <div class="form-group">
+                            <label>Receipt Tagline</label>
+                            <input type="text" id="set-receipt-tagline" class="search-bar"
+                                placeholder="Your trusted neighborhood store" oninput="updateBrandingPreview()">
+                        </div>
+                    </form>
+                    <div class="receipt-branding-preview">
+                        <p class="preview-label">Live Preview</p>
+                        <div class="receipt-mini-preview">
+                            <strong id="preview-header">StockFlow</strong>
+                            <small id="preview-tagline">Your trusted neighborhood store</small>
+                            <div class="preview-divider"></div>
+                            <small>Item 1 ............. ₱50.00</small>
+                            <small>Item 2 ............. ₱30.00</small>
+                            <div class="preview-divider"></div>
+                            <small><strong>TOTAL: ₱80.00</strong></small>
+                            <small class="preview-footer" id="preview-footer">Thank you for your purchase!</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-grid mt-4">
+                <!-- Branch Management -->
+                <div class="section-box">
+                    <h3>🏢 Branch Management</h3>
+                    <div id="branches-list" class="branches-container"></div>
+                    <div class="add-branch-form mt-3">
+                        <input type="text" id="new-branch-name" class="search-bar"
+                            placeholder="Branch name (e.g. Main Store)">
+                        <button class="btn btn-primary btn-sm mt-2" onclick="addBranch()">➕ Add Branch</button>
+                    </div>
+                </div>
+
+                <!-- Integrations -->
+                <div class="section-box">
+                    <h3>🔌 Integrations</h3>
+                    <div class="integrations-list">
+                        <div class="integration-item">
+                            <div class="integration-info">
+                                <span class="integration-icon">☁️</span>
+                                <div>
+                                    <strong>Cloud Backup</strong>
+                                    <small class="text-muted">Auto-sync data to cloud storage</small>
+                                </div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="int-cloud"
+                                    onchange="toggleIntegration('cloud', this.checked)">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="integration-item">
+                            <div class="integration-info">
+                                <span class="integration-icon">📱</span>
+                                <div>
+                                    <strong>SMS Notifications</strong>
+                                    <small class="text-muted">Low stock alerts via SMS</small>
+                                </div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="int-sms" onchange="toggleIntegration('sms', this.checked)">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="integration-item">
+                            <div class="integration-info">
+                                <span class="integration-icon">📧</span>
+                                <div>
+                                    <strong>Email Reports</strong>
+                                    <small class="text-muted">Weekly sales digest email</small>
+                                </div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="int-email"
+                                    onchange="toggleIntegration('email', this.checked)">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support -->
+        <section id="support" class="page-section">
+            <header class="section-header">
+                <div>
+                    <h1>Customer Support</h1>
+                    <p class="text-muted">Get help, read FAQs, or send us a message.</p>
+                </div>
+            </header>
+
+            <div class="settings-grid">
+                <!-- Quick Help -->
+                <div class="section-box">
+                    <h3>📋 Frequently Asked Questions</h3>
+                    <div class="faq-list">
+                        <details class="faq-item">
+                            <summary>How do I add a new product to inventory?</summary>
+                            <p>Go to the <strong>Inventory</strong> page and fill out the "Add New Product" form at the
+                                top. Enter the product name, category, price, initial stock, and an emoji icon, then
+                                click <strong>Save to Inventory</strong>.</p>
+                        </details>
+                        <details class="faq-item">
+                            <summary>Can I export my sales data?</summary>
+                            <p>Yes! On the <strong>Dashboard</strong>, click the <strong>Export CSV</strong> button in
+                                the top-right corner. This downloads your current inventory and sales summary as a CSV
+                                file.</p>
+                        </details>
+                        <details class="faq-item">
+                            <summary>How do I change a user's role?</summary>
+                            <p>Currently, roles are assigned when a user is created. To change a role, delete the user
+                                from the <strong>Users</strong> page and re-create them with the desired role (Admin,
+                                Manager, or Cashier).</p>
+                        </details>
+                        <details class="faq-item">
+                            <summary>Where is my data stored?</summary>
+                            <p>All data is stored locally in your browser's <strong>localStorage</strong>. It persists
+                                across sessions but is limited to the current browser and device. Clearing browser data
+                                will erase your StockFlow data.</p>
+                        </details>
+                        <details class="faq-item">
+                            <summary>How do I print a receipt?</summary>
+                            <p>After completing a sale in the <strong>Point of Sale</strong>, a receipt modal appears.
+                                Click <strong>Print Receipt</strong> to use your browser's print function. You can
+                                customize the store name and tagline in <strong>Settings → Receipt Branding</strong>.
+                            </p>
+                        </details>
+                        <details class="faq-item">
+                            <summary>What does the "Low Stock" badge mean?</summary>
+                            <p>Products with <strong>10 or fewer units</strong> are flagged as "Low Stock" with an
+                                orange badge. Products with <strong>0 units</strong> are marked as "Out of Stock" in
+                                red.</p>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Contact Support -->
+                <div class="section-box">
+                    <h3>📨 Send a Support Ticket</h3>
+                    <form class="settings-form" onsubmit="handleSupportTicket(event)">
+                        <div class="form-group">
+                            <label>Your Name</label>
+                            <input type="text" class="search-bar" id="support-name" placeholder="Enter your name"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" class="search-bar" id="support-email" placeholder="you@email.com"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select class="search-bar" id="support-category" required>
+                                <option value="">Select a topic...</option>
+                                <option>Bug Report</option>
+                                <option>Feature Request</option>
+                                <option>Account Issue</option>
+                                <option>Billing Question</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Describe Your Issue</label>
+                            <textarea class="search-bar" id="support-message" rows="5"
+                                placeholder="Tell us what you need help with..."
+                                style="resize:vertical;font-family:inherit;" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width:100%;">📤 Submit Ticket</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Contact Info Strip -->
+            <div class="support-contact-strip">
+                <div class="support-contact-item">
+                    <span class="support-contact-icon">📧</span>
+                    <div>
+                        <strong>Email</strong>
+                        <span>support@stockflow.app</span>
+                    </div>
+                </div>
+                <div class="support-contact-item">
+                    <span class="support-contact-icon">📞</span>
+                    <div>
+                        <strong>Phone</strong>
+                        <span>+63 912 345 6789</span>
+                    </div>
+                </div>
+                <div class="support-contact-item">
+                    <span class="support-contact-icon">🕐</span>
+                    <div>
+                        <strong>Response Time</strong>
+                        <span>Within 24 hours</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Add User Modal -->
+    <div id="add-user-modal" class="modal"
+        onclick="handleModalBackdropClick(event, 'add-user-modal', closeAddUserModal)">
+        <div class="confirm-box" style="max-width:420px;text-align:left;padding:35px 32px;">
+            <h3 class="text-center" style="margin:0 0 24px;font-size:1.15rem;">➕ Add New User</h3>
+            <form id="add-user-form" onsubmit="saveNewUser(event)" style="display:flex;flex-direction:column;gap:20px;">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="new-user-name" class="search-bar" placeholder="Enter username" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="new-user-pass" class="search-bar" placeholder="Enter password" required>
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select id="new-user-role" class="search-bar" required>
+                        <option value="cashier">Cashier</option>
+                        <option value="manager">Manager</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <p id="add-user-error" class="error-text hidden text-center" style="margin:0;">Username already exists!
+                </p>
+                <div class="flex-gap" style="margin-top:4px;">
+                    <button type="button" class="btn btn-secondary flex-1" onclick="closeAddUserModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary flex-1">Create User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Receipt Modal -->
+    <div id="receipt-modal" class="modal" onclick="handleModalBackdropClick(event, 'receipt-modal', closeReceipt)">
+        <div class="modal-content receipt-paper text-center">
+            <h2 class="mb-1" id="receipt-header-text">StockFlow</h2>
+            <p class="receipt-subtitle" id="receipt-tagline-text">Official Receipt</p>
+
+            <div class="flex-between receipt-meta">
+                <span><strong>Txn #:</strong> <span id="receipt-txn"></span></span>
+                <span id="receipt-date"></span>
+            </div>
+
+            <hr class="dashed-divider">
+            <div id="receipt-items" class="receipt-items-container"></div>
+            <hr class="dashed-divider">
+
+            <div class="flex-between bold text-lg mb-1">
+                <span>TOTAL:</span> <span id="receipt-total"></span>
+            </div>
+            <div class="flex-between mt-1">
+                <span>CASH:</span> <span id="receipt-cash"></span>
+            </div>
+            <div class="flex-between">
+                <span>CHANGE:</span> <span id="receipt-change"></span>
+            </div>
+            <p class="receipt-thank-you" id="receipt-footer-text">Thank you for your purchase! 🙏</p>
+
+            <div class="no-print receipt-actions mt-4 flex-gap">
+                <button class="btn flex-1 btn-secondary" onclick="window.print()">🖨 Print</button>
+                <button class="btn flex-1 btn-primary" onclick="closeReceipt()">New Transaction</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Member Portfolio Modal -->
+    <div id="member-portfolio-modal" class="modal"
+        onclick="handleModalBackdropClick(event, 'member-portfolio-modal', closeMemberPortfolio)">
+        <div class="portfolio-modal-content">
+            <button class="btn-close" onclick="closeMemberPortfolio()">&times;</button>
+            <div class="portfolio-modal-header">
+                <div class="portfolio-modal-avatar" id="pm-avatar"></div>
+                <div class="portfolio-modal-info">
+                    <h2 id="pm-name"></h2>
+                    <p id="pm-role" class="text-accent"></p>
+                    <small id="pm-sub" class="text-muted"></small>
+                </div>
+            </div>
+            <div class="portfolio-modal-body">
+                <div class="portfolio-section">
+                    <h4>About</h4>
+                    <p id="pm-about"></p>
+                </div>
+                <div class="portfolio-section">
+                    <h4>Skills</h4>
+                    <div id="pm-skills" class="skills-list"></div>
+                </div>
+                <div class="portfolio-section">
+                    <h4>Contributions to StockFlow</h4>
+                    <ul id="pm-contributions" class="contributions-list"></ul>
+                </div>
+                <div class="portfolio-section portfolio-placeholder-notice">
+                    <span>📌</span>
+                    <p>Portfolio links and work samples will be added here once published.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Account Modal -->
+    <div id="delete-account-modal" class="modal"
+        onclick="handleModalBackdropClick(event, 'delete-account-modal', closeDeleteAccountModal)">
+        <div class="confirm-box">
+            <div class="confirm-icon">🗑️</div>
+            <h3>Delete Account</h3>
+            <p class="text-muted mb-3">This will permanently delete your account and all associated data. This cannot be
+                undone.</p>
+            <input type="password" id="delete-account-pass" class="search-bar mt-3"
+                placeholder="Enter your password to confirm">
+            <p id="delete-account-error" class="error-text hidden mt-2 text-center">Incorrect password.</p>
+            <div class="flex-gap mt-4">
+                <button class="btn btn-secondary flex-1" onclick="closeDeleteAccountModal()">Cancel</button>
+                <button class="btn btn-danger flex-1" onclick="confirmDeleteAccount()">Delete Account</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

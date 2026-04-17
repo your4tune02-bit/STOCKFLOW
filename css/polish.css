@@ -1,0 +1,317 @@
+/* ==========================================
+   CUSTOM SCROLLBARS
+   ========================================== */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.3);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.5);
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, 0.4);
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 116, 139, 0.6);
+}
+
+/* ==========================================
+   ENHANCED CARD ANIMATIONS
+   ========================================== */
+body.dark-mode .card:hover {
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+}
+
+/* Dashboard cards gradient accent on top */
+.card-success::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--success), #34d399);
+    border-radius: 16px 16px 0 0;
+}
+
+.card-warning::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--warning), #fbbf24);
+    border-radius: 16px 16px 0 0;
+}
+
+.card-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), #6366f1);
+    border-radius: 16px 16px 0 0;
+}
+
+/* ==========================================
+   SECTION BOX HOVER GLOW
+   ========================================== */
+.section-box:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    border-color: rgba(59, 130, 246, 0.15);
+}
+
+body.dark-mode .section-box:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    border-color: rgba(59, 130, 246, 0.2);
+}
+
+/* ==========================================
+   IMPROVED SIDEBAR POLISH
+   ========================================== */
+.sidebar-brand h1 {
+    position: relative;
+}
+
+.sidebar-brand h1::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), #6366f1);
+    border-radius: 3px;
+}
+
+.nav-item.active {
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* ==========================================
+   PRODUCT CARD POLISH
+   ========================================== */
+.product-card:hover {
+    transform: translateY(-6px) scale(1.02);
+}
+
+/* ==========================================
+   ANALYTICS BAR CHART POLISH
+   ========================================== */
+.analytics-bar:hover {
+    opacity: 0.9;
+    transform: scaleY(1.03);
+    transform-origin: bottom;
+}
+
+/* ==========================================
+   BUTTON MICRO-INTERACTIONS
+   ========================================== */
+.btn:active:not(:disabled) {
+    transform: translateY(0) scale(0.98);
+}
+
+.btn-checkout.btn-primary {
+    animation: checkoutReady 0.4s ease;
+}
+
+@keyframes checkoutReady {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.02);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* ==========================================
+   TABLE ROW POLISH
+   ========================================== */
+body.dark-mode tbody tr:hover {
+    background: rgba(59, 130, 246, 0.06);
+}
+
+/* ==========================================
+   CLICKABLE TRANSACTIONS
+   ========================================== */
+.activity-clickable {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: var(--radius-sm);
+}
+
+.activity-clickable:hover {
+    background: rgba(59, 130, 246, 0.06);
+    transform: translateX(4px);
+}
+
+.activity-clickable:hover strong {
+    color: var(--accent);
+}
+
+body.dark-mode .activity-clickable:hover {
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.txn-clickable {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.txn-clickable:hover {
+    background: rgba(59, 130, 246, 0.06) !important;
+}
+
+.txn-clickable:hover td:first-child strong {
+    color: var(--accent);
+}
+
+body.dark-mode .txn-clickable:hover {
+    background: rgba(59, 130, 246, 0.1) !important;
+}
+
+.btn-view-receipt {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--accent);
+    background: rgba(59, 130, 246, 0.08);
+    padding: 4px 10px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.txn-clickable:hover .btn-view-receipt {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--accent-hover);
+}
+
+/* ==========================================
+   SETTINGS PAGE POLISH
+   ========================================== */
+.settings-form .form-group:focus-within label {
+    color: var(--accent);
+}
+
+.receipt-mini-preview:hover {
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.08);
+}
+
+.integration-item:hover {
+    transform: translateX(4px);
+}
+
+.branch-card:hover {
+    transform: translateX(4px);
+}
+
+/* ==========================================
+   TOAST DARK MODE POLISH
+   ========================================== */
+body.dark-mode .toast {
+    background: rgba(30, 41, 59, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ==========================================
+   LOW STOCK PULSE ANIMATION
+   ========================================== */
+.badge-low {
+    animation: lowPulse 2s ease-in-out infinite;
+}
+
+@keyframes lowPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* ==========================================
+   LANDING PAGE CTA GLOW
+   ========================================== */
+.lp-cta-btn {
+    position: relative;
+}
+
+.lp-cta-btn::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    opacity: 0;
+    z-index: -1;
+    filter: blur(12px);
+    transition: opacity 0.3s ease;
+}
+
+.lp-cta-btn:hover::after {
+    opacity: 0.6;
+}
+
+/* ==========================================
+   RESPONSIVE POLISH
+   ========================================== */
+@media (max-width: 480px) {
+    .analytics-cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card .value {
+        font-size: 1.8rem;
+    }
+
+    .section-header h1 {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .lp-hero-left h1 {
+        font-size: 3rem;
+    }
+}
+
+/* ==========================================
+   SELECTION & FOCUS STYLES
+   ========================================== */
+::selection {
+    background: rgba(59, 130, 246, 0.25);
+    color: inherit;
+}
+
+*:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
