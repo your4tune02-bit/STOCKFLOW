@@ -272,9 +272,12 @@ function unlockSystem() {
     setUserDisplay();
     applyRoleRestrictions();
     const lp = document.getElementById('landing-page');
+    lp.style.transition = 'opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s cubic-bezier(0.22, 1, 0.36, 1)';
     lp.style.opacity = '0';
+    lp.style.transform = 'scale(1.02)';
+    lp.style.filter = 'blur(6px)';
     lp.style.pointerEvents = 'none';
-    setTimeout(() => { lp.style.display = 'none'; }, 500);
+    setTimeout(() => { lp.style.display = 'none'; }, 650);
 }
 
 function setUserDisplay() {
@@ -335,6 +338,9 @@ function showPage(pageId, element) {
     document.getElementById(pageId).classList.add('active');
     if (element) element.classList.add('active');
 
+    // Smooth scroll to top of main content
+    const main = document.querySelector('main');
+    if (main) main.scrollTo({ top: 0, behavior: 'smooth' });
     if (window.innerWidth <= 768) {
         document.getElementById('sidebar').classList.remove('open');
         document.getElementById('sidebar-overlay').classList.remove('active');
@@ -743,13 +749,16 @@ async function deleteItem(id) {
 function animateValue(el, target, prefix = '') {
     if (!el) return;
     const isFloat  = target % 1 !== 0;
-    const duration = 600;
+    const duration = 800;
     const start    = performance.now();
     const from     = parseFloat(el.dataset.current || 0);
 
     function step(now) {
         const progress = Math.min((now - start) / duration, 1);
-        const ease     = 1 - Math.pow(1 - progress, 3);
+        // Smooth cubic-bezier easing
+        const ease     = progress < 0.5
+            ? 4 * progress * progress * progress
+            : 1 - Math.pow(-2 * progress + 2, 3) / 2;
         const current  = from + (target - from) * ease;
         el.textContent = prefix + (isFloat ? current.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : Math.round(current));
         el.dataset.current = current;
