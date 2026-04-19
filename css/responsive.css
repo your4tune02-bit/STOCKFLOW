@@ -18,7 +18,9 @@
     main {
         margin-left: 0;
         width: 100%;
+        max-width: 100%;
         padding: 80px 18px 30px;
+        overflow-x: hidden;
     }
 
     .pos-layout {
@@ -70,6 +72,15 @@
 
     .dashboard-grid {
         gap: 16px;
+    }
+
+    .section-box,
+    .table-responsive,
+    .dashboard-grid > *,
+    .settings-grid > *,
+    .analytics-cards-grid > * {
+        min-width: 0;
+        max-width: 100%;
     }
 }
 
@@ -228,6 +239,17 @@
 }
 
 @media (max-width: 480px) {
+    main {
+        padding: 78px 14px 24px;
+    }
+
+    .section-box,
+    .login-container,
+    .confirm-box,
+    .modal-content {
+        max-width: 100%;
+    }
+
     .billing-plans-grid {
         grid-template-columns: 1fr;
     }
