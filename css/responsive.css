@@ -1,0 +1,238 @@
+/* ==========================================
+   MOBILE RESPONSIVE
+   ========================================== */
+@media (max-width: 768px) {
+    .mobile-header {
+        display: flex;
+    }
+
+    #sidebar {
+        transform: translateX(-100%);
+        box-shadow: var(--shadow-lg);
+    }
+
+    #sidebar.open {
+        transform: translateX(0);
+    }
+
+    main {
+        margin-left: 0;
+        width: 100%;
+        padding: 80px 18px 30px;
+    }
+
+    .pos-layout {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .pos-sidebar {
+        height: 480px;
+    }
+
+    .pos-main {
+        height: 55vh;
+    }
+
+    #landing-page h1 {
+        font-size: 3.2rem;
+    }
+
+    .section-box {
+        padding: 20px;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+
+    .login-container {
+        padding: 32px 24px;
+    }
+
+    .section-header {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .inventory-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .inventory-controls {
+        width: 100%;
+    }
+
+    .inventory-controls .search-bar-sm {
+        flex: 1;
+    }
+
+    .dashboard-grid {
+        gap: 16px;
+    }
+}
+
+/* ==========================================
+   PRINT STYLES
+   ========================================== */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+    }
+
+    .modal {
+        position: absolute;
+        display: block !important;
+        background: transparent;
+        padding: 0;
+    }
+
+    .modal-content {
+        box-shadow: none;
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+/* Better POS mobile stacking */
+@media (max-width: 768px) {
+    .pos-layout {
+        flex-direction: column;
+        height: auto;
+        gap: 20px;
+    }
+
+    .pos-main {
+        height: 50vh;
+    }
+
+    .pos-sidebar {
+        height: auto;
+        min-height: 420px;
+    }
+
+    .analytics-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .analytics-advanced-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .analytics-advanced-header select {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Improved empty cart */
+.empty-cart-msg {
+    color: #94a3b8;
+    text-align: center;
+    padding: 60px 20px;
+    line-height: 1.6;
+}
+
+/* Better focus states */
+.search-bar:focus,
+#cash-tendered:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+}
+
+/* Toast improvements */
+.toast {
+    margin-bottom: 12px;
+}
+
+.stars-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at 30% 20%, #1a2f6b 0%, #070d1a 65%);
+    overflow: hidden;
+    z-index: -1;
+}
+
+.stars-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        radial-gradient(1px 1px at 20% 30%, rgba(255, 255, 255, 0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 80% 10%, rgba(255, 255, 255, 0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 50% 60%, rgba(255, 255, 255, 0.2) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 10% 80%, rgba(255, 255, 255, 0.35) 0%, transparent 100%),
+        radial-gradient(1px 1px at 65% 40%, rgba(147, 197, 253, 0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 85%, rgba(255, 255, 255, 0.25) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 90% 70%, rgba(147, 197, 253, 0.3) 0%, transparent 100%);
+    opacity: 0.8;
+}
+
+/* HERO VISUAL ENHANCEMENT */
+.lp-hero-left h1 {
+    font-size: 5.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff 0%, #93c5fd 60%, #6366f1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -3px;
+    line-height: 1;
+    margin: 0 0 20px;
+}
+
+
+/* ==========================================
+   BILLING RESPONSIVE
+   ========================================== */
+@media (max-width: 768px) {
+    .billing-plans-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .billing-modal-panel {
+        padding: 52px 20px 28px;
+        max-width: 100%;
+        border-radius: 16px 16px 0 0;
+        max-height: 92vh;
+    }
+
+    .payment-modal-panel {
+        padding: 52px 20px 28px;
+        max-width: 100%;
+        border-radius: 16px 16px 0 0;
+    }
+
+    #billing-modal,
+    #payment-modal {
+        align-items: flex-end;
+        padding: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .billing-plans-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .billing-modal-panel {
+        padding: 48px 16px 24px;
+    }
+}
