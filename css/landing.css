@@ -7,7 +7,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     background: #070d1a;
     color: white;
@@ -48,6 +48,8 @@
     max-width: 1100px;
     margin: 0 auto;
     padding: 0 28px;
+    width: 100%;
+    min-width: 0;
 }
 
 /* ---- NAVBAR ---- */
@@ -123,6 +125,7 @@
     border-radius: 8px;
     transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
     cursor: pointer;
+    display: inline-block;
 }
 
 .lp-nav-link:hover {
@@ -1254,6 +1257,7 @@
     .lp-navbar {
         padding: 0 20px;
         height: 64px;
+        overflow: visible;
     }
 
     .lp-nav-links,
@@ -1263,7 +1267,7 @@
 
     .lp-nav-links.open {
         display: flex;
-        flex-direction: column;
+        flex-direction: column !important;
         position: fixed;
         top: 64px;
         left: 0;
@@ -1272,14 +1276,50 @@
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         padding: 16px;
         z-index: 10000;
+        gap: 8px;
+        align-items: stretch;
+        justify-content: flex-start;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-y: auto;
+        max-height: calc(100vh - 64px);
+    }
+
+    .lp-nav-links.open li {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .lp-nav-links.open .lp-nav-link {
+        width: 100%;
+        display: block;
+        padding: 12px 14px;
+        white-space: normal;
     }
 
     .lp-hamburger {
         display: block;
     }
+
+    .lp-hero,
+    .lp-section,
+    .lp-dashboard-preview,
+    .lp-price-card,
+    .lp-team-card,
+    .lp-contact-card,
+    .lp-contact-form,
+    .lp-footer-grid {
+        min-width: 0;
+        max-width: 100%;
+    }
 }
 
 @media (max-width: 600px) {
+    .lp-container {
+        padding: 0 20px;
+    }
+
     .lp-hero-title {
         font-size: 3rem;
     }
@@ -1299,6 +1339,12 @@
 
     .lp-features-grid {
         grid-template-columns: 1fr;
+    }
+
+    .lp-section-title,
+    .lp-cta-inner h2,
+    .lp-ratings-title {
+        word-break: break-word;
     }
 }
 
